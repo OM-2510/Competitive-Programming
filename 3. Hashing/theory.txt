@@ -1,0 +1,135 @@
+Problem: Find occurences of specific character in a given array
+
+1. Brute Force Approach:
+    int arr[n] = [1,2,1,3,1,2]
+
+    int no_occ(int *arr, int num){
+        int occ = 0;
+        for(int i=0; i<n; i++){
+            if(arr[i] == num){
+                occ++;
+            }
+        }
+        return occ;
+    }
+
+** By default values declared at global scope are initialized with zero instead of garbage values, {write down why is that}
+** For 10^8 steps a computer takes on an average 1sec, 10^10 will therefore by unitary method will take around 100 sec.
+
+2. Hashing: simply maybe defined as prestoring and fetching for naive. 
+
+    i. Idea
+        => let there be 12 entries in an array
+
+        arr = [1,2,1,3,2]
+
+        new_arr with indexes [0][1][2][3][4][5][6]....[12] all initialized with zero
+
+            what we do here is increment each index with respect to the entry
+
+                [0] = 0
+                [1] = 2
+                [2] = 2
+                [3] = 1
+                [4] = 0 
+                ... and so on till [12] = 0
+
+    ii. Implementation-{Hashing}
+
+        #include <iostream>
+
+        int main(){
+            int arr = {1,2,3,2,1};
+            int hash1[4] = {0};
+
+            for(int i=0; i<n; i++){
+                hash1[arr[i]]++;         //Here we make increment to the index for the value of arr[i]
+            }
+        }
+
+** inside any function max size of array can be only 10^6 entries
+** at global decalration max size of array can be 10^7 entries, {for any other case we get segmentation fault}
+
+3. Character Hashing
+
+    for how many times any character 'x' occur in this string s="abcdabejc"
+
+        //Upppercase ASCII codes range(65,90) and the Lowercase ones range(97,122)
+
+        => char - 'a' or char - 'a'
+            when entered gets automatically type casted to integer
+
+        we can utilize this logic to insert the occurences of each character in the array
+
+    =>Pseudocode
+
+    #include <iostream>
+
+    int main(){
+        string s = "abcdabejc";
+
+        int hash[256] = {0};
+
+        for(int i = 0; i < s.size(); i++){
+            hash[s[i]-'a']++;
+        }
+
+        //then the number of occurence for any character can be retrieved by\
+            char c;
+            cin>>c;
+            cout<<hash[c - 'a'];
+    }
+
+4. map
+
+    in arr[]={1,2,2,3,1,2};
+
+    map<int, int> mpp;
+    for(int i=0; i<n; i++){
+        mpp[arr[i]]++;
+    }
+
+    cin>>num;
+    cout<<mpp[num];
+
+**map stores all the values in sorted manner
+
+    string s = "abcbcbca"
+    map<char, int> mpp;
+
+    for(int i=0; i<s.size(); i++){
+        mpp[char[i]]++;
+    }
+
+**time complexity of map
+    storing and fetching of map has time complexity O(log n)
+
+
+5. unordered_maps
+
+    => The unordered_map won't store the entires in sorted manner
+
+**time complexity
+    storing and fetching takes:
+        avg complexity = O(1)
+        worst case = O(n) where n is the number of entries
+
+
+**What we do is use unordered_maps and only use maps when we are getting time limit exceeded or some error.
+    Cause the chances of worst case complexity occuring is very less and this worst case complexity is usually hit due to internal collisions
+
+
+*******Hashing*******
+
+Hasing is usually achieved by following methods: 
+
+    - Division Method 
+    - Folding Method
+    - Mid square MethoS
+
+
+Division Method: 
+    
+    int arr = [2,5,16,28,139];
+
+    **Internal Collsions and linear chaining(achieved via a sorted linked list for multiple entries)
